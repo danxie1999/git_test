@@ -85,6 +85,9 @@ def conv_xlsx(List):
 		##准备画图和制作汇总excel
 		import matplotlib.pyplot as plt
 		import matplotlib.dates as mdate
+		##增加一个pandas和matplotlib一起使用时的转换声明，避免警告报错
+		from pandas.plotting import register_matplotlib_converters
+		register_matplotlib_converters()
 		##设置中文显示
 		plt.rcParams['font.sans-serif'] = ['Microsoft YaHei']#设置中文
 		plt.rcParams['axes.unicode_minus'] = False
