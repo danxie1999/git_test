@@ -1,3 +1,5 @@
+##This is script to combine csv files into one single xlsx file
+##and analyze the data from csv files
 import os
 
 ##工作目录
