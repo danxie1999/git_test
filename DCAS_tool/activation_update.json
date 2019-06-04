@@ -1,0 +1,28 @@
+{ 
+    "deviceData":{ 
+        "activationMsg":"", 
+        "deviceLocation":{ 
+            "locationDistanceControl":"", 
+            "locationData":{ 
+                "latitude":"", 
+                "longitude":"" 
+            } 
+        } 
+    }, 
+    "authorizations":{ 
+        "authorizationElements": 
+            [ 
+
+            ] 
+    }, 
+    "bouquet":"", 
+    "zipCode": "",
+    "regionBits": 
+        [ 
+            { 
+                "region":"A", 
+                "bitmap":"" 
+            } 
+        ], 
+    "casId":2386 
+}
