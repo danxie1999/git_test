@@ -1,0 +1,12 @@
+name,p1/p3,p4,cct
+sub_create,101308579,23030947,16564975
+card_total,103914859,25208188,18704820
+H,4.73,6.93,4.40
+A,10.05,4.00
+R,364.63,144.53
+bj_sub_create,699,7961
+utc_sub_create_m,707,7924,0
+utc_sub_del_m,67,50,0
+utc_sub_create_a,450,5544,0
+utc_sub_del_a,98,48,0
+asa,15692
