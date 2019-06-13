@@ -79,11 +79,11 @@ def csv_report_excel(input_data):
     ##星期
     temp[2] = week_day
     ##hht p3 
-    temp[7] = '户户通(P1/P3)用户数:       {:,}\n户户通(P1/P3)智能卡总量:    {:,}'.format(sub_create_p3,card_total_p3)
+    temp[7] = '\n户户通(P1/P3)用户数:       {:,}\n户户通(P1/P3)智能卡总量:    {:,}\n'.format(sub_create_p3,card_total_p3)
     ##hht p4
-    temp[8] = '户户通(P3/P4/P5)用户数:     {:,}\n户户通(P3/P4/P5)智能卡总量:  {:,}'.format(sub_create_p4,card_total_p4)
+    temp[8] = '\n户户通(P3/P4/P5)用户数:     {:,}\n户户通(P3/P4/P5)智能卡总量:  {:,}\n'.format(sub_create_p4,card_total_p4)
     ##cct
-    temp[9] = '村村通用户数:              {:,}\n村村通智能卡总量:         {:,}'.format(sub_create_cct,card_total_cct)
+    temp[9] = '\n村村通用户数:              {:,}\n村村通智能卡总量:         {:,}\n'.format(sub_create_cct,card_total_cct)
     ##ASA connections
     temp[10] = asa
     ##hhtp3 带宽
@@ -169,7 +169,7 @@ format_header = workbook.add_format({
 ##第二行和第三行的格式
 format_header_2 = workbook.add_format({
     'bold': True,
-    'font_name': '华文仿宋',
+    'font_name': '宋体',
     'align':'center',
     'valign': 'vcenter',
  	'font_size':12,
@@ -178,7 +178,7 @@ format_header_2 = workbook.add_format({
 ##第二列和第三列的格式
 format_item_name = workbook.add_format({
     'bold': False,
-    'font_name': '华文仿宋',
+    'font_name': '宋体',
     'align':'center',
     'valign': 'vcenter',
  	'text_wrap': True,
@@ -192,7 +192,7 @@ format_merge_1 = workbook.add_format({
 
 ##正文的格式
 format_1 = workbook.add_format({
-    'font_name': '华文仿宋',
+    'font_name': '宋体',
  	'font_size':12,
  	'text_wrap': True,
     'border': 1})
