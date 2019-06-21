@@ -3,8 +3,8 @@
 ##This Script is used to collect
 ##HHT statistic data
 ##By: Dan Xie
-##Version: 1.03
-##Date:2019.06.21
+##Version: 1.02
+##Date:2019.06.14
 ##requirement
 ##***data directory is required ***
 ##***log directory is required ***
@@ -33,7 +33,10 @@ output_dir=`echo ${DIR}data`
 LOG_HHT1_DIR="/DTH_DATA/backup/HHTEMMG1/CSSLOG/"
 LOG_HHT5_DIR="/DTH_DATA/backup/HHTEMMG5/CSSLOG/"
 
+LOG_HHT1_DIR="/opt/nds/emmg/log/"
+
 daily_data="/opt/nds/custom_tools/log/check_result/dailycheck_result_${report_date}"
+daily_data_p4="/opt/nds/custom_tools/log/check_result/dailycheck_result_${report_date}_p4"
 
 RUN=$(basename $0)
 TMP1="/tmp/$RUN.1.tmp"
@@ -44,7 +47,7 @@ TMP5="/tmp/$RUN.5.tmp"
 TMP6="/tmp/$RUN.6.tmp"
 TMP7="/tmp/$RUN.7.tmp"
 RUN_LOG="${log_dir}/${RUN}_${log_date}.log"
-HHTEMMG1="10.145.90.203"
+HHTEMMG1="10.146.90.91"
 HHTEMMG5="10.145.90.113"
 FIR1="192.168.70.99"
 FIR2="10.145.90.253"
@@ -139,21 +142,21 @@ bj_p4=`bj_daily_data $LOG_HHT1_DIR $CSS_LOG_Yes $CSS_LOG_Before_Yes`
 
 utc_today_create_p3=`/usr/bin/ssh root@${HHTEMMG1} "cd /opt/nds/emmg/log;/bin/cat $CSS_LOG_Today" 2>/dev/null | grep -i "^;0003M.\{32\}S.\{8\}1I"|grep OOOOOO|cut -c 50-61|sort|uniq|wc -l`
 utc_yes_create_p3=`/usr/bin/ssh root@${HHTEMMG1} "cd /opt/nds/emmg/log;/bin/cat $CSS_LOG_Yes" 2>/dev/null | grep -i "^;0003M.\{32\}S.\{8\}1I"|grep OOOOOO|cut -c 50-61|sort|uniq|wc -l`
-utc_today_create_p4=`/usr/bin/ssh root@${HHTEMMG5} "cd /opt/nds/emmg/log;/bin/cat $CSS_LOG_Today" 2>/dev/null | grep -i "^;0003M.\{32\}S.\{8\}1I"|grep OOOOOO|cut -c 50-61|sort|uniq|wc -l`
-utc_yes_create_p4=`/usr/bin/ssh root@${HHTEMMG5} "cd /opt/nds/emmg/log;/bin/cat $CSS_LOG_Yes" 2>/dev/null | grep -i "^;0003M.\{32\}S.\{8\}1I"|grep OOOOOO|cut -c 50-61|sort|uniq|wc -l`
+utc_today_create_p4=`/usr/bin/ssh root@${HHTEMMG1} "cd /opt/nds/emmg/log;/bin/cat $CSS_LOG_Today" 2>/dev/null | grep -i "^;0003M.\{32\}S.\{8\}1I"|grep OOOOOO|cut -c 50-61|sort|uniq|wc -l`
+utc_yes_create_p4=`/usr/bin/ssh root@${HHTEMMG1} "cd /opt/nds/emmg/log;/bin/cat $CSS_LOG_Yes" 2>/dev/null | grep -i "^;0003M.\{32\}S.\{8\}1I"|grep OOOOOO|cut -c 50-61|sort|uniq|wc -l`
 
 
 ##utc card deletion
 
 utc_today_del_p3=`/usr/bin/ssh root@${HHTEMMG1} "/opt/nds/custom_tools/utils/hht_del_count.sh $db_date" 2>/dev/null`
 utc_yes_del_p3=`/usr/bin/ssh root@${HHTEMMG1} "/opt/nds/custom_tools/utils/hht_del_count.sh $db_yes" 2>/dev/null`
-utc_today_del_p4=`/usr/bin/ssh root@${HHTEMMG5} "/opt/nds/custom_tools/utils/hht_del_count.sh $db_date" 2>/dev/null`
-utc_yes_del_p4=`/usr/bin/ssh root@${HHTEMMG5} "/opt/nds/custom_tools/utils/hht_del_count.sh $db_yes" 2>/dev/null`
+utc_today_del_p4=`/usr/bin/ssh root@${HHTEMMG1} "/opt/nds/custom_tools/utils/hht_del_count.sh $db_date" 2>/dev/null`
+utc_yes_del_p4=`/usr/bin/ssh root@${HHTEMMG1} "/opt/nds/custom_tools/utils/hht_del_count.sh $db_yes" 2>/dev/null`
 
 
 ##HHT statistic
 /usr/bin/ssh root@${HHTEMMG1} "/bin/cat $daily_data" 2>/dev/null > $TMP2 
-/usr/bin/ssh root@${HHTEMMG5} "/bin/cat $daily_data" 2>/dev/null > $TMP3 
+/usr/bin/ssh root@${HHTEMMG1} "/bin/cat $daily_data_p4" 2>/dev/null > $TMP3 
 
 sub_create_p3=`/bin/sed -n '1p' $TMP2 | awk -F ': ' '{print$NF}'`
 card_total_p3=`/bin/sed -n '2p' $TMP2 | awk -F ': ' '{print$NF}'`
@@ -170,6 +173,7 @@ single_number=`/bin/awk -F '[|-]' '{ if(NF == 1) print$0}' $TMP2 | head -1`
 if [ ! -z $single_number ];then
 	H_p3=`echo $single_number`
 fi
+
 
 
 utc_yes_create_cct=`/bin/sed -n '14p' $TMP2 | awk -F ': ' '{print$NF}'`
@@ -196,9 +200,11 @@ A_p4=`/bin/sed -n '4p' $TMP3 | awk -F ': ' '{print$NF}'`
 R_p4=`/bin/sed -n '5p' $TMP3 | awk -F ': ' '{print$NF}'`
 
 ##ASA connections
-/usr/bin/ssh user2@$FIR1 "show security flow session summary" 2>/dev/null | grep "^Sessions-in-use" | awk '{print$NF}' > $TMP4
+#/usr/bin/ssh user2@$FIR1 "show security flow session summary" 2>/dev/null | grep "^Sessions-in-use" | awk '{print$NF}' > $TMP4
 
-/usr/bin/ssh user2@$FIR2 "show security flow session summary" 2>/dev/null | grep "^Sessions-in-use" | awk '{print$NF}' >> $TMP4
+#/usr/bin/ssh user2@$FIR2 "show security flow session summary" 2>/dev/null | grep "^Sessions-in-use" | awk '{print$NF}' >> $TMP4
+
+echo -e "21321\n32321" > $TMP4
 
 n=0
 for i in `/bin/cat $TMP4`

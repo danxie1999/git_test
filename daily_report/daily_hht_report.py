@@ -112,14 +112,14 @@ os.chdir(DIR2)
 L=os.listdir()
 
 ##过滤数据文件夹中符合条件的文件
-L_week = {'monday.csv':1,'tuesday.csv':2,'wednesday.csv':3,'thurday.csv':4,'friday.csv':5,'saturday.csv':6,'sunday.csv':7}
+L_week = {'monday.csv':1,'tuesday.csv':2,'wednesday.csv':3,'thursday.csv':4,'friday.csv':5,'saturday.csv':6,'sunday.csv':7}
 
 ##文件名完全过滤
 L_data = [ i for i in L if i in L_week.keys()]
 
 ##如果没有发现相关文件，退出
 if not L_data:
-    print('Cannot find required SMS files or duplicated files,exiting...')
+    input('Cannot find required SMS files or duplicated files,exiting...')
     exit()
 
 ##按星期排序
@@ -258,9 +258,16 @@ worksheet.set_default_row(hide_unused_rows=True)
 worksheet.set_column('K:XFD', None, None, {'hidden': True})
 worksheet.freeze_panes(3,3)
 
-
+##退出并保存excel对象到excel文件
 writer.save()
 
+##删除数据目录中的数据
+os.chdir(DIR2)
 
+L=os.listdir()
 
+if L:
+    for item in L:
+        os.remove(item)
 
+input('任务完成, 系统运行报告小结_{}.xlsx 生成在当期目录。\n删除data目录中的所有内容。\n'.format(Date))
