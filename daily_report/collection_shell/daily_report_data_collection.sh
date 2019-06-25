@@ -133,7 +133,7 @@ rm -rf $TMP1
 ###BJ card activation
 bj_p3=`bj_daily_data $LOG_HHT1_DIR $CSS_LOG_Yes $CSS_LOG_Before_Yes`
 
-bj_p4=`bj_daily_data $LOG_HHT1_DIR $CSS_LOG_Yes $CSS_LOG_Before_Yes`
+bj_p4=`bj_daily_data $LOG_HHT5_DIR $CSS_LOG_Yes $CSS_LOG_Before_Yes`
 
 ##utc card activation
 
@@ -172,22 +172,25 @@ if [ ! -z $single_number ];then
 fi
 
 
-utc_yes_create_cct=`/bin/sed -n '14p' $TMP2 | awk -F ': ' '{print$NF}'`
+utc_yes_create_cct=`/bin/sed -n '/CCT Yesterday Created/p' $TMP2 | head -1 | awk -F ': ' '{print$NF}'`
 if [ -z $utc_yes_create_cct ];then
-	utc_today_create_cct=0
+	utc_yes_create_cct=0
 fi
-utc_yes_del_cct=`/bin/sed -n '15p' $TMP2 | awk -F ': ' '{print$NF}'`
+utc_yes_del_cct=`/bin/sed -n '/CCT Yesterday Deleted/p' $TMP2 | head -1 | awk -F ': ' '{print$NF}'`
 if [ -z $utc_yes_del_cct ];then
 	utc_yes_del_cct=0
 fi
-utc_today_create_cct=`/bin/sed -n '16p' $TMP2 | awk -F ': ' '{print$NF}'`
+utc_today_create_cct=`/bin/sed -n '/CCT Today Created/p' $TMP2 | head -1 | awk -F ': ' '{print$NF}'`
 if [ -z $utc_today_create_cct ];then
 	utc_today_create_cct=0
 fi
-utc_today_del_cct=`/bin/sed -n '17p' $TMP2 | awk -F ': ' '{print$NF}'`
+utc_today_del_cct=`/bin/sed -n '/CCT Today Deleted/p' $TMP2 | head -1 | awk -F ': ' '{print$NF}'`
 if [ -z $utc_today_del_cct ];then
 	utc_today_del_cct=0
 fi
+
+
+
 
 sub_create_p4=`/bin/sed -n '1p' $TMP3 | awk -F ': ' '{print$NF}'`
 card_total_p4=`/bin/sed -n '2p' $TMP3 | awk -F ': ' '{print$NF}'`

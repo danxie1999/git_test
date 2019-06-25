@@ -38,7 +38,7 @@ def csv_report_excel(input_data):
     A_p4 = df_from.loc['A','p4']
     R_p4 = df_from.loc['R','p4']
 
-    H_cct = int(df_from.loc['H','cct'])
+    H_cct = df_from.loc['H','cct']
 
     bj_sub_create_p3 = int(df_from.loc['bj_sub_create','p1/p3'])
     utc_sub_create_m_p3 = int(df_from.loc['utc_sub_create_m','p1/p3'])

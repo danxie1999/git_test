@@ -176,19 +176,19 @@ fi
 
 
 
-utc_yes_create_cct=`/bin/sed -n '14p' $TMP2 | awk -F ': ' '{print$NF}'`
+utc_yes_create_cct=`/bin/sed -n '/CCT Yesterday Created/p' $TMP2 | head -1 | awk -F ': ' '{print$NF}'`
 if [ -z $utc_yes_create_cct ];then
 	utc_today_create_cct=0
 fi
-utc_yes_del_cct=`/bin/sed -n '15p' $TMP2 | awk -F ': ' '{print$NF}'`
+utc_yes_del_cct=`/bin/sed -n '/CCT Yesterday Deleted/p' $TMP2 | head -1 | awk -F ': ' '{print$NF}'`
 if [ -z $utc_yes_del_cct ];then
 	utc_yes_del_cct=0
 fi
-utc_today_create_cct=`/bin/sed -n '16p' $TMP2 | awk -F ': ' '{print$NF}'`
+utc_today_create_cct=`/bin/sed -n '/CCT Today Created/p' $TMP2 | head -1 | awk -F ': ' '{print$NF}'`
 if [ -z $utc_today_create_cct ];then
 	utc_today_create_cct=0
 fi
-utc_today_del_cct=`/bin/sed -n '17p' $TMP2 | awk -F ': ' '{print$NF}'`
+utc_today_del_cct=`/bin/sed -n '/CCT Today Deleted/p' $TMP2 | head -1 | awk -F ': ' '{print$NF}'`
 if [ -z $utc_today_del_cct ];then
 	utc_today_del_cct=0
 fi
